@@ -1,12 +1,6 @@
-const {fileList} = require("./API_v1/fileList");
-const {getFile, uploadFile, deleteFile} = require("./API_v1/file");
-const {createFolder} = require("./API_v1/folder");
+const cloudStoreApi = require("./API_v1/cloud_store_api");
 
 
 module.exports = {
-    fileList,
-    getFile,
-    uploadFile,
-    deleteFile,
-    createFolder
+    cloudStoreApi
 }

@@ -13,9 +13,10 @@ class CloudStoreApiClient {
         // Create an axios instance with base configuration
         this.axiosInstance = axios.create({
             baseURL: baseUrl,
-            auth: username && password
-                ? { username, password }
-                : undefined,
+            auth: {
+                username: username,
+                password: password
+            },
             httpsAgent:{
                 rejectUnauthorized: useTLS
             },

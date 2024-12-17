@@ -11,8 +11,7 @@ class CloudStoreApiClient {
      */
     constructor({baseUrl, username, password, useTLS = true}) {
         // Create an axios instance with base configuration
-        const usernamePasswordBuffer = Buffer.from(username + ':' + password);
-        const base64data = usernamePasswordBuffer.toString('base64');
+        const base64data = btoa(`${username}:${password}`);
         this.axiosInstance = axios.create({
             baseURL: baseUrl,
             headers: {

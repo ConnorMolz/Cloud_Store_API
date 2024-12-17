@@ -9,11 +9,11 @@ class CloudStoreApiClient {
      * @param {string} [config.username] - Optional username for authentication
      * @param {string} [config.password] - Optional password for authentication
      */
-    async constructor({baseUrl, username, password, useTLS = true}) {
+    constructor({baseUrl, username, password, useTLS = true}) {
         // Create an axios instance with base configuration
         const usernamePasswordBuffer = Buffer.from(username + ':' + password);
         const base64data = usernamePasswordBuffer.toString('base64');
-        this.axiosInstance = await axios.create({
+        this.axiosInstance = axios.create({
             baseURL: baseUrl,
             headers: {
                 'Content-Type': 'application/json',

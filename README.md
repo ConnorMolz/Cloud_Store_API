@@ -9,8 +9,22 @@ npm install --save  cloud_store_api
 ```
 ### Usage
 ```
-const cloudStore = new cloudStoreApi("https://example.com");
-let FileList = cloudStore.fileList("/");
+// Create a client instance
+      const client = new CloudStoreApiClient({
+          baseUrl: 'http://localhost:5234',   // Example URL
+          username: 'admin',   // Example credentials
+          password: 'admin',   // Example credentials
+          useTLS: false   // For bypass SSL
+      });
+
+// Example methods
+      try {
+          // Get file list
+          const fileList = await client.getFileList(''); // Rootpath
+          console.log(fileList);
+      } catch (error) {
+          console.error('API Error:', error);
+      }
 ```
 
 ## !!! Important !!!

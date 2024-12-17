@@ -1,4 +1,5 @@
 import axios from 'axios';
+import https from 'https';
 
 class CloudStoreApiClient {
     /**
@@ -8,13 +9,17 @@ class CloudStoreApiClient {
      * @param {string} [config.username] - Optional username for authentication
      * @param {string} [config.password] - Optional password for authentication
      */
-    constructor({ baseUrl, username, password }) {
+    constructor({ baseUrl, username, password, useTLS = true }) {
         // Create an axios instance with base configuration
         this.axiosInstance = axios.create({
             baseURL: baseUrl,
             auth: username && password
                 ? { username, password }
-                : undefined
+                : undefined,
+            httpsAgent:{
+                rejectUnauthorized: useTLS
+            },
+            withCredentials: true
         });
     }
 
@@ -26,7 +31,7 @@ class CloudStoreApiClient {
     async getFileList(path) {
         try {
             const response = await this.axiosInstance.get('/api/file_list', {
-                params: { path }
+                params: { path },
             });
             return response.data;
         } catch (error) {
@@ -44,7 +49,7 @@ class CloudStoreApiClient {
         try {
             const response = await this.axiosInstance.get('/api/file', {
                 params: { path, fileName },
-                responseType: 'blob'
+                responseType: 'blob',
             });
             return response.data;
         } catch (error) {
@@ -66,7 +71,9 @@ class CloudStoreApiClient {
 
             await this.axiosInstance.post('/api/file', formData, {
                 params: { currentPath, fileName },
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
             });
         } catch (error) {
             this._handleError(error, 'Upload File');
@@ -82,7 +89,7 @@ class CloudStoreApiClient {
     async deleteFile(path, fileName) {
         try {
             await this.axiosInstance.delete('/api/file', {
-                params: { path, fileName }
+                params: { path, fileName },
             });
         } catch (error) {
             this._handleError(error, 'Delete File');
@@ -98,7 +105,7 @@ class CloudStoreApiClient {
     async createFolder(currentPath, folderName) {
         try {
             await this.axiosInstance.post('/api/folder', null, {
-                params: { currentPath, folderName }
+                params: { currentPath, folderName },
             });
         } catch (error) {
             this._handleError(error, 'Create Folder');

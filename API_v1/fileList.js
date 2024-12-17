@@ -1,7 +1,0 @@
-const fileList = () =>{
-
-}
-
-export {
-    fileList
-};

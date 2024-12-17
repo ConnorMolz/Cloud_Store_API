@@ -20,7 +20,7 @@ class CloudStoreApiClient {
             httpsAgent:{
                 rejectUnauthorized: useTLS
             },
-            withCredentials: true
+            withCredentials: false
         });
     }
 
